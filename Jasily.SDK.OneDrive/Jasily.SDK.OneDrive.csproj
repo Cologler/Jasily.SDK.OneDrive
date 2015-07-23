@@ -41,9 +41,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentications\AuthenticationInfo.cs" />
     <Compile Include="Authentications\AuthenticationPermissions.cs" />
     <Compile Include="Authentications\AuthenticationPermissionsExtensions.cs" />
-    <Compile Include="Authentications\IAuthenticator.cs" />
+    <Compile Include="Authentications\CodeFlowAuthenticator.cs" />
+    <Compile Include="Authentications\IAuthenticationInfo.cs" />
+    <Compile Include="Authentications\Authenticator.cs" />
+    <Compile Include="Authentications\ICodeFlowAuthenticationInfo.cs" />
+    <Compile Include="Authentications\ITokenFlowAuthenticationInfo.cs" />
+    <Compile Include="Authentications\TokenFlowAuthenticator.cs" />
+    <Compile Include="Common\OneDriveBaseWebController.cs" />
     <Compile Include="OptionalParameters\Expand.cs" />
     <Compile Include="OptionalParameters\ExpandMode.cs" />
     <Compile Include="OptionalParameters\IOneDriveOptionalParameters.cs" />

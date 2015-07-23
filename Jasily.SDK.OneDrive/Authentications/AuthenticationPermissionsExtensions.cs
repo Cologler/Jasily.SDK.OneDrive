@@ -32,7 +32,7 @@ namespace Jasily.SDK.OneDrive.Authentications
         /// </summary>
         /// <param name="permissions"></param>
         /// <returns></returns>
-        public static string GetParameterValue(AuthenticationPermissions permissions)
+        public static string GetParameterValue(this AuthenticationPermissions permissions)
         {
             if (permissions == AuthenticationPermissions.None)
                 throw new ArgumentException("can not use None.", nameof(permissions));
