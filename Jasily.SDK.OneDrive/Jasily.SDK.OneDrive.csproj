@@ -41,13 +41,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentications\AuthenticationPermissions.cs" />
+    <Compile Include="Authentications\AuthenticationPermissionsExtensions.cs" />
     <Compile Include="Authentications\IAuthenticator.cs" />
     <Compile Include="OptionalParameters\Expand.cs" />
     <Compile Include="OptionalParameters\ExpandMode.cs" />
     <Compile Include="OptionalParameters\IOneDriveOptionalParameters.cs" />
     <Compile Include="OptionalParameters\OrderBy.cs" />
     <Compile Include="OptionalParameters\OrderByProperties.cs" />
-    <Compile Include="OptionalParameters\select.cs" />
+    <Compile Include="OptionalParameters\Select.cs" />
     <Compile Include="OptionalParameters\SelectProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
