@@ -19,7 +19,7 @@ namespace Jasily.SDK.OneDrive.OptionalParameters
         /// return value like 'select=name,size'
         /// </summary>
         /// <returns></returns>
-        public string GetParameterString() => $"select={String.Join(",", this.Popup())}";
+        public string GetParameterString() => this.SelectProperties.Count > 0 ? $"select={String.Join(",", this.Popup())}" : "";
 
         private IEnumerable<string> Popup()
         {
