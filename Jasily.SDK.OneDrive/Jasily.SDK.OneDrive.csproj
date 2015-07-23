@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9ef43595-aaf2-4303-907a-f4295bc99550}</ProjectGuid>
+    <ProjectGuid>{9EF43595-AAF2-4303-907A-F4295BC99550}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Jasily.SDK.OneDrive</RootNamespace>
@@ -35,9 +35,20 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\Jasily\Jasily.Core\Jasily.Core.csproj">
+      <Project>{8442e8e7-d515-4481-8a36-71711b1fbf79}</Project>
+      <Name>Jasily.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Authentications\IAuthenticator.cs" />
+    <Compile Include="OptionalParameters\Expand.cs" />
+    <Compile Include="OptionalParameters\ExpandMode.cs" />
+    <Compile Include="OptionalParameters\IOneDriveOptionalParameters.cs" />
+    <Compile Include="OptionalParameters\OrderBy.cs" />
+    <Compile Include="OptionalParameters\OrderByProperties.cs" />
+    <Compile Include="OptionalParameters\select.cs" />
+    <Compile Include="OptionalParameters\SelectProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
@@ -48,5 +59,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
 </Project>
