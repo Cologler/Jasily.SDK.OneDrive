@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Jasily.SDK.OneDrive.Authentications
@@ -19,24 +20,20 @@ namespace Jasily.SDK.OneDrive.Authentications
             return base.BuildAuthenticateUri(scope, ResponseType.Code);
         }
 
-        public async Task<bool> TryAuthenticateWithRedirectUri(string redirectUri)
+        public async Task<ICodeFlowAuthenticationInfo> TryAuthenticateWithRedirectUri(string redirectUri)
         {
             var start = RedirectUri + "?code=";
             if (!redirectUri.StartsWith(start))
-                return false;
-            var code = redirectUri.Substring(start.Length);
-            if (code.IsNullOrWhiteSpace())
-                return false;
+                return null;
+            var builder = new HttpUriBuilder(redirectUri);
+            var code = builder.QueryStringParameters.FirstOrDefault(z => z.Key == "code");
+            if (code.Value.IsNullOrWhiteSpace())
+                return null;
 
             var body =
-                $"client_id={this.ClientId}&redirect_uri={RedirectUri}&client_secret={this.ClientSecret}&code={code}&grant_type=authorization_code";
+                $"client_id={this.ClientId}&redirect_uri={RedirectUri}&client_secret={this.ClientSecret}&code={code.Value}&grant_type=authorization_code";
             var result = await RedeemAccessTokenAsync(body);
-            if (result.IsSuccess)
-            {
-		        
-            }
-
-            return true;
+            return result.Result;
         }
 
         private static async Task<WebResult<AuthenticationInfo>> RedeemAccessTokenAsync(string bodyString)
@@ -121,7 +118,5 @@ namespace Jasily.SDK.OneDrive.Authentications
                 this.Updating = false;
             }
         }
-
-        
     }
 }

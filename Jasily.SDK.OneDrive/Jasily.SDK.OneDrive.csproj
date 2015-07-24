@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\Jasily\Jasily.Core\Jasily.Core.csproj">
+    <ProjectReference Include="..\..\Jasily\Jasily.Core\Jasily.Core.csproj">
       <Project>{8442e8e7-d515-4481-8a36-71711b1fbf79}</Project>
       <Name>Jasily.Core</Name>
     </ProjectReference>
@@ -50,7 +50,18 @@
     <Compile Include="Authentications\ICodeFlowAuthenticationInfo.cs" />
     <Compile Include="Authentications\ITokenFlowAuthenticationInfo.cs" />
     <Compile Include="Authentications\TokenFlowAuthenticator.cs" />
-    <Compile Include="Common\OneDriveBaseWebController.cs" />
+    <Compile Include="OneDriveEntities\FileSystemInfo.cs" />
+    <Compile Include="OneDriveEntities\Folder.cs" />
+    <Compile Include="OneDriveEntities\Operators.cs" />
+    <Compile Include="OneDriveEntities\Root.cs" />
+    <Compile Include="OneDriveWebController.cs" />
+    <Compile Include="OneDriveEntities\Drives.cs" />
+    <Compile Include="OneDriveEntities\DriveType.cs" />
+    <Compile Include="OneDriveEntities\Drive.cs" />
+    <Compile Include="OneDriveEntities\OneDriveEntity.cs" />
+    <Compile Include="OneDriveEntities\Owner.cs" />
+    <Compile Include="OneDriveEntities\Quota.cs" />
+    <Compile Include="OneDriveEntities\User.cs" />
     <Compile Include="OptionalParameters\Expand.cs" />
     <Compile Include="OptionalParameters\ExpandMode.cs" />
     <Compile Include="OptionalParameters\IOneDriveOptionalParameters.cs" />
