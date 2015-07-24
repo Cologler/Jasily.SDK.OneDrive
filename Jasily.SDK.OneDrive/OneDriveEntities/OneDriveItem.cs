@@ -8,7 +8,7 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
     public class OneDriveItem : Root
     {
         [DataMember(Name = "@content.downloadUrl")]
-        public Parent DownloadUrl { get; set; }
+        public string DownloadUrl { get; set; }
 
         [DataMember(Name = "parentReference")]
         public Parent Parent { get; set; }
