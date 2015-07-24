@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Jasily.SDK.OneDrive.Authentications
 {
@@ -51,6 +52,8 @@ namespace Jasily.SDK.OneDrive.Authentications
         {
             private readonly object syncRoot = new object();
 
+            private int UpdatedCount;
+
             public string ClientId { get; }
             public string ClientSecret { get; }
             public string RefreshToken { get; }
@@ -63,7 +66,7 @@ namespace Jasily.SDK.OneDrive.Authentications
 
             public event EventHandler<string> AccessTokenUpdated;
 
-            private async Task<int> UpdateTokenAsync()
+            public async Task<bool> UpdateTokenAsync()
             {
                 var body = string.Format(
                     "client_id={0}&redirect_uri={1}&client_secret={2}&refresh_token={3}&grant_type=refresh_token",
@@ -75,15 +78,16 @@ namespace Jasily.SDK.OneDrive.Authentications
                 var result = (await RedeemAccessTokenAsync(body));
                 if (result.IsSuccess)
                 {
+                    this.UpdatedCount++;
                     this.LastAccessToken = result.Result.AccessToken;
                     this.LastUpdateTime = DateTime.UtcNow;
                     this.LastExpiresIn = result.Result.ExpiresIn;
 
                     this.AccessTokenUpdated.BeginFire(this, result.Result.AccessToken);
-                    return result.Result.ExpiresIn;
+                    return true;
                 }
 
-                return -1;
+                return false;
             }
 
             public TokenWatcher(string clientId, string clientSecret, string refreshToken)
@@ -100,15 +104,18 @@ namespace Jasily.SDK.OneDrive.Authentications
             {
                 this.Updating = true;
 
+                var version = this.UpdatedCount;
                 var count = 0;
-                var time = -1;
                 while (this.Updating && count < 3)
                 {
                     count++;
-                    if ((time = await this.UpdateTokenAsync()) > 0)
+                    if (version != this.UpdatedCount || await this.UpdateTokenAsync())
                     {
+                        version = this.UpdatedCount;
                         count = 0;
-                        await Task.Delay(time * 1000 / 2);
+
+                        var time = this.LastExpiresIn - (DateTime.UtcNow - LastUpdateTime).TotalSeconds;
+                        if (time > 60) await Task.Delay((int)time * 500);
                     }
                 }
             }

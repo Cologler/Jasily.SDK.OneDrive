@@ -35,9 +35,10 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
             }
         }
 
-        public async Task<WebResult<Root>> GetRootAsync(OneDriveWebController controller)
+        public async Task<WebResult<Root>> GetRootAsync(OneDriveWebController controller = null)
         {
-            return await controller.RawGetAsync<Root>("drive/root");
+            return await (controller ?? this.CreatorController)
+                .RawGetAsync<Root>("drive/root");
         }
     }
 }

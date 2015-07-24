@@ -19,6 +19,8 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
         [DataMember(Name = "video")]
         public VideoMeta VideoMeta { get; set; }
 
+        public bool IsFile() => this.FileInfo != null;
+
         public async Task<WebResult<OneDriveArray<Thumbnail>>> GetThumbnailsAsync(OneDriveWebController controller)
         {
             return await controller.RawGetAsync<OneDriveArray<Thumbnail>>($"/drive/items/{this.Id}/thumbnails");
