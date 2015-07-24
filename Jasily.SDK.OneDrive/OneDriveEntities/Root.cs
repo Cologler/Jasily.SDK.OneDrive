@@ -38,9 +38,15 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
         [DataMember(Name = "folder")]
         public FolderInfo FolderInfo { get; set; }
 
-        public async Task<WebResult<OneDriveArray<OneDriveItem>>> ListChildrenAsync(OneDriveWebController controller)
+        /// <summary>
+        /// if controller is null, use CreatorController
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <returns></returns>
+        public async Task<WebResult<OneDriveArray<OneDriveItem>>> ListChildrenAsync(OneDriveWebController controller = null)
         {
-            return await controller.GetPathAsync<OneDriveArray<OneDriveItem>>($"drive/items/{this.Id}/children");
+            return await (controller ?? this.CreatorController)
+                .RawGetAsync<OneDriveArray<OneDriveItem>>($"drive/items/{this.Id}/children");
         }
     }
 }

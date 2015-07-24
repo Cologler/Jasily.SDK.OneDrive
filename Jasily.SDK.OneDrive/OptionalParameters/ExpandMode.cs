@@ -1,7 +1,13 @@
+using System.Enums;
+
 namespace Jasily.SDK.OneDrive.OptionalParameters
 {
     public enum ExpandMode
     {
-        Children
+        [SupportedFlags((int)(SelectProperties.Name | SelectProperties.Size))]
+        Children,
+
+        [SupportedFlags((int)(SelectProperties.Large | SelectProperties.Medium | SelectProperties.Small | SelectProperties.Source))]
+        Thumbnails
     }
 }

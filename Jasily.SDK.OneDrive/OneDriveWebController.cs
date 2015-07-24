@@ -66,20 +66,25 @@ namespace Jasily.SDK.OneDrive
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        internal async Task<WebResult<T>> GetPathAsync<T>(string path)
+        public async Task<WebResult<T>> RawGetAsync<T>(string path)
+            where T : OneDriveEntity
         {
             var request = this.GetRequest(new Uri(RootApiUrl + path, UriKind.Absolute));
-            return (await request.GetResultAsBytesAsync()).AsJson<T>();
+            request.Method = HttpWebRequestResourceString.Method.Get;
+            var result = (await request.GetResultAsBytesAsync()).AsJson<T>();
+            if (result.IsSuccess)
+                result.Result.SetCreatorController(this);
+            return result;
         }
 
         public async Task<WebResult<Drive>> GetPrimaryDriveAsync()
         {
-            return await this.GetPathAsync<Drive>("drive");
+            return await this.RawGetAsync<Drive>("drive");
         }
 
         public async Task<WebResult<OneDriveArray<Drive>>> GetDrivesAsync()
         {
-            return await this.GetPathAsync<OneDriveArray<Drive>>("drives");
+            return await this.RawGetAsync<OneDriveArray<Drive>>("drives");
         }
     }
 }

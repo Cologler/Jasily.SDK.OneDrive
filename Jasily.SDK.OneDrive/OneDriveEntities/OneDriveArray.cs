@@ -12,5 +12,18 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
     {
         [DataMember(Name = "value")]
         public List<T> Value { get; set; }
+
+        internal override void SetCreatorController(OneDriveWebController controller)
+        {
+            base.SetCreatorController(controller);
+
+            if (this.Value != null)
+            {
+                foreach (var item in this.Value.OfType<OneDriveEntity>())
+                {
+                    item.SetCreatorController(controller);
+                }
+            }
+        }
     }
 }

@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using System.Enums;
+using System.Reflection;
+
 namespace Jasily.SDK.OneDrive.OptionalParameters
 {
     public struct Expand : IOneDriveOptionalParameters
@@ -18,9 +22,16 @@ namespace Jasily.SDK.OneDrive.OptionalParameters
         /// <returns></returns>
         string IOneDriveOptionalParameters.GetParameterString()
         {
-            return this.Select.HasValue
-                ? $"expand={this.Mode.ToString().ToLower()}({this.Select.Value.GetParameterString()})"
-                : $"expand={this.Mode.ToString().ToLower()}";
+            if (!this.Select.HasValue)
+                return $"expand={this.Mode.ToString().ToLower()}";
+
+            var attr = Mode.GetType().GetRuntimeField(nameof(this.Mode)).GetCustomAttribute<SupportedFlagsAttribute>();
+            Debug.Assert(attr != null);
+
+            if (!attr.IsSupport((int)this.Select.Value.SelectedProperties))
+                throw new System.NotSupportedException();
+
+            return $"expand={this.Mode.ToString().ToLower()}({this.Select.Value.GetParameterString()})";
         }
     }
 }

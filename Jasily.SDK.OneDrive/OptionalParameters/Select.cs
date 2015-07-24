@@ -8,22 +8,34 @@ namespace Jasily.SDK.OneDrive.OptionalParameters
 {
     public struct Select : IOneDriveOptionalParameters
     {
+        public Select(params SelectProperties[] selectProperties)
+        {
+            this.SelectedProperties = SelectProperties.None;
+            foreach (var property in selectProperties)
+                this.SelectedProperties |= property;
+            if (this.SelectedProperties == SelectProperties.None)
+                throw new ArgumentException("can not use 'SelectProperties.None'", nameof(selectProperties));
+        }
         public Select(IEnumerable<SelectProperties> selectProperties)
         {
-            this.SelectProperties = selectProperties.ToArray();
+            this.SelectedProperties = SelectProperties.None;
+            foreach (var property in selectProperties)
+                this.SelectedProperties |= property;
+            if (this.SelectedProperties == SelectProperties.None)
+                throw new ArgumentException("can not use 'SelectProperties.None'", nameof(selectProperties));
         }
 
-        public IReadOnlyCollection<SelectProperties> SelectProperties { get; }
+        public SelectProperties SelectedProperties { get; }
 
         /// <summary>
         /// return value like 'select=name,size'
         /// </summary>
         /// <returns></returns>
-        public string GetParameterString() => this.SelectProperties.Count > 0 ? $"select={String.Join(",", this.Popup())}" : "";
+        public string GetParameterString() => $"select={String.Join(",", this.Popup())}";
 
         private IEnumerable<string> Popup()
         {
-            return this.SelectProperties.Select(z => z.ToString().ToLower());
+            return this.SelectedProperties.SplitFlags(false).Select(z => z.ToString().ToLower());
         } 
     }
 }
