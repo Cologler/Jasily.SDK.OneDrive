@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
-    public class FileSystemInfo : OneDriveObject
+    public class FileSystemInfo : OneDriveEntity
     {
         [DataMember(Name = "createdDateTime")]
         private string CreatedDateTime;
