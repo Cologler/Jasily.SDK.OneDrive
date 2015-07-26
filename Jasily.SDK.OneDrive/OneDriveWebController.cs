@@ -4,6 +4,7 @@ using System.Net;
 using Jasily.SDK.OneDrive.Entities;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Json;
+using System.Diagnostics;
 
 namespace Jasily.SDK.OneDrive
 {
@@ -54,9 +55,9 @@ namespace Jasily.SDK.OneDrive
             this.AccessToken = e;
         }
 
-        protected HttpWebRequest GetRequest(Uri uri)
+        internal HttpWebRequest CreateRequest(string path)
         {
-            var request = WebRequest.CreateHttp(uri);
+            var request = WebRequest.CreateHttp(RootApiUrl + path);
             request.Headers[HttpRequestHeader.Authorization] = $"bearer {this.AccessToken}";
             return request;
         }
@@ -69,9 +70,11 @@ namespace Jasily.SDK.OneDrive
         public async Task<WebResult<T>> RawGetAsync<T>(string path)
             where T : OneDriveEntity
         {
-            var request = this.GetRequest(new Uri(RootApiUrl + path, UriKind.Absolute));
+            var request = this.CreateRequest(path);
             request.Method = HttpWebRequestResourceString.Method.Get;
-            var result = (await request.GetResultAsBytesAsync()).AsJson<T>();
+            var bytesResult = await request.GetResultAsBytesAsync();
+            Debug.WriteLineIf(bytesResult.IsSuccess, bytesResult.Result.GetString());
+            var result = bytesResult.AsJson<T>();
             if (result.IsSuccess)
                 result.Result.SetCreatorController(this);
             return result;
