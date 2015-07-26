@@ -1,7 +1,7 @@
 ﻿using System;
 using Jasily.SDK.OneDrive.Authentications;
 using System.Net;
-using Jasily.SDK.OneDrive.OneDriveEntities;
+using Jasily.SDK.OneDrive.Entities;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Json;
 

@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jasily.SDK.OneDrive.OneDriveEntities
+namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
     public class Drive : OneDriveEntity
@@ -18,7 +18,7 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
         public string DriveType { get; set; }
 
         [DataMember(Name = "owner")]
-        public Owner Owner { get; set; }
+        public IdentitySet Owner { get; set; }
 
         [DataMember(Name = "quota")]
         public Quota Quota { get; set; }
@@ -28,7 +28,7 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
             switch (this.DriveType)
             {
                 case "personal":
-                    return OneDriveEntities.DriveType.Personal;
+                    return Entities.DriveType.Personal;
 
                 default:
                     throw new ArgumentException(nameof(this.DriveType));

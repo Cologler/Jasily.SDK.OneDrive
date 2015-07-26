@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jasily.SDK.OneDrive.OneDriveEntities
+namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
     public class OneDriveArray<T> : OneDriveEntity

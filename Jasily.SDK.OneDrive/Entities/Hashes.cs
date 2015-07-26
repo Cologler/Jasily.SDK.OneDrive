@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace Jasily.SDK.OneDrive.OneDriveEntities
+namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
     public class Hashes

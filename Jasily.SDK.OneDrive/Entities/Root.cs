@@ -3,13 +3,13 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
-namespace Jasily.SDK.OneDrive.OneDriveEntities
+namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
     public class Root : FileSystemInfo
     {
         [DataMember(Name = "createdBy")]
-        public Operators CreatedBy { get; set; }
+        public IdentitySet CreatedBy { get; set; }
 
         [DataMember(Name = "cTag")]
         public string CTag { get; set; }
@@ -21,7 +21,7 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
         public string Id { get; set; }
 
         [DataMember(Name = "lastModifiedBy")]
-        public Operators LastModifiedBy { get; set; }
+        public IdentitySet LastModifiedBy { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
@@ -35,18 +35,25 @@ namespace Jasily.SDK.OneDrive.OneDriveEntities
         [DataMember(Name = "fileSystemInfo")]
         public FileSystemInfo FileSystemInfo { get; set; }
 
+        #region only folder
+
+        /// <summary>
+        /// can be null. check before use.
+        /// </summary>
         [DataMember(Name = "folder")]
         public FolderInfo FolderInfo { get; set; }
+
+        #endregion
 
         /// <summary>
         /// if controller is null, use CreatorController
         /// </summary>
         /// <param name="controller"></param>
         /// <returns></returns>
-        public async Task<WebResult<OneDriveArray<OneDriveItem>>> ListChildrenAsync(OneDriveWebController controller = null)
+        public async Task<WebResult<OneDriveArray<Item>>> ListChildrenAsync(OneDriveWebController controller = null)
         {
             return await (controller ?? this.CreatorController)
-                .RawGetAsync<OneDriveArray<OneDriveItem>>($"drive/items/{this.Id}/children");
+                .RawGetAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children");
         }
     }
 }

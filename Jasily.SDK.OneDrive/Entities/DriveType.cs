@@ -1,4 +1,4 @@
-﻿namespace Jasily.SDK.OneDrive.OneDriveEntities
+﻿namespace Jasily.SDK.OneDrive.Entities
 {
     public enum DriveType
     {

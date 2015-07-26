@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Jasily.SDK.OneDrive.OneDriveEntities
+namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
-    public class User : OneDriveEntity
+    public class Identity : OneDriveEntity
     {
         [DataMember(Name = "displayName")]
         public string DisplayName { get; set; }
