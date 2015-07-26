@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -12,11 +13,6 @@ namespace Jasily.SDK.OneDrive.Entities
 
         [DataMember(Name = "parentReference")]
         public ItemReference Parent { get; set; }
-
-        public async Task<WebResult<OneDriveArray<ThumbnailSet>>> GetThumbnailsAsync(OneDriveWebController controller)
-        {
-            return await controller.RawGetAsync<OneDriveArray<ThumbnailSet>>($"/drive/items/{this.Id}/thumbnails");
-        }
 
         #region only file
 
@@ -55,5 +51,37 @@ namespace Jasily.SDK.OneDrive.Entities
         #endregion
 
         #endregion
+
+        public string GetDownloadUrlWithName()
+        {
+            if (this.DownloadUrl.IsNullOrWhiteSpace())
+                throw new NotSupportedException($"{nameof(this.DownloadUrl)} can not be empty.");
+
+            return $"{this.DownloadUrl}/{System.Net.WebUtility.UrlEncode(this.Name)}";
+        }
+
+        public async Task<WebResult<OneDriveArray<ThumbnailSet>>> GetThumbnailsAsync(OneDriveWebController controller = null)
+        {
+            return await (controller ?? this.CreatorController)
+                .RawGetAsync<OneDriveArray<ThumbnailSet>>($"drive/items/{this.Id}/thumbnails");
+        }
+
+        public async Task<WebResult<string>> GetStreamUrlAsync(OneDriveWebController controller = null)
+        {
+            try
+            {
+                var request = (controller ?? this.CreatorController).CreateRequest($"drive/items/{this.Id}/content");
+                var response = await request.GetResponseAsync();
+                return new WebResult<string>(response, ((dynamic)request).Address.ToString());
+            }
+            catch (WebException e)
+            {
+                return new WebResult<string>(e);
+            }
+            catch (Exception e)
+            {
+                throw new NotSupportedException("can not get Address", e);
+            }
+        }
     }
 }
