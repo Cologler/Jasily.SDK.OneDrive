@@ -53,7 +53,7 @@ namespace Jasily.SDK.OneDrive.Entities
         public async Task<WebResult<OneDriveArray<Item>>> ListChildrenAsync(OneDriveWebController controller = null)
         {
             return await (controller ?? this.CreatorController)
-                .RawGetAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children");
+                .WrapGetAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children");
         }
     }
 }

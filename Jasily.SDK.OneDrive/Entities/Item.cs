@@ -63,7 +63,7 @@ namespace Jasily.SDK.OneDrive.Entities
         public async Task<WebResult<OneDriveArray<ThumbnailSet>>> GetThumbnailsAsync(OneDriveWebController controller = null)
         {
             return await (controller ?? this.CreatorController)
-                .RawGetAsync<OneDriveArray<ThumbnailSet>>($"drive/items/{this.Id}/thumbnails");
+                .WrapGetAsync<OneDriveArray<ThumbnailSet>>($"drive/items/{this.Id}/thumbnails");
         }
 
         public async Task<WebResult<string>> GetStreamUrlAsync(OneDriveWebController controller = null)

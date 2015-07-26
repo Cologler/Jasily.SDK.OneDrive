@@ -55,11 +55,25 @@ namespace Jasily.SDK.OneDrive
             this.AccessToken = e;
         }
 
-        internal HttpWebRequest CreateRequest(string path)
+        internal HttpWebRequest CreateRequest(string url)
         {
-            var request = WebRequest.CreateHttp(RootApiUrl + path);
+            var request = WebRequest.CreateHttp(url);
             request.Headers[HttpRequestHeader.Authorization] = $"bearer {this.AccessToken}";
             return request;
+        }
+
+        internal async Task<WebResult<T>> RawGetAsync<T>(string url)
+            where T : OneDriveEntity
+        {
+            var request = this.CreateRequest(url);
+            request.Method = HttpWebRequestResourceString.Method.Get;
+            var bytesResult = await request.GetResultAsBytesAsync();
+            if (bytesResult.IsSuccess)
+                Debug.WriteLine(bytesResult.Result.GetString());
+            var result = bytesResult.AsJson<T>();
+            if (result.IsSuccess)
+                result.Result.SetCreatorController(this);
+            return result;
         }
 
         /// <summary>
@@ -67,27 +81,20 @@ namespace Jasily.SDK.OneDrive
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public async Task<WebResult<T>> RawGetAsync<T>(string path)
+        public async Task<WebResult<T>> WrapGetAsync<T>(string path)
             where T : OneDriveEntity
         {
-            var request = this.CreateRequest(path);
-            request.Method = HttpWebRequestResourceString.Method.Get;
-            var bytesResult = await request.GetResultAsBytesAsync();
-            Debug.WriteLineIf(bytesResult.IsSuccess, bytesResult.Result.GetString());
-            var result = bytesResult.AsJson<T>();
-            if (result.IsSuccess)
-                result.Result.SetCreatorController(this);
-            return result;
+            return await this.RawGetAsync<T>(RootApiUrl + path);
         }
 
         public async Task<WebResult<Drive>> GetPrimaryDriveAsync()
         {
-            return await this.RawGetAsync<Drive>("drive");
+            return await this.WrapGetAsync<Drive>("drive");
         }
 
         public async Task<WebResult<OneDriveArray<Drive>>> GetDrivesAsync()
         {
-            return await this.RawGetAsync<OneDriveArray<Drive>>("drives");
+            return await this.WrapGetAsync<OneDriveArray<Drive>>("drives");
         }
     }
 }
