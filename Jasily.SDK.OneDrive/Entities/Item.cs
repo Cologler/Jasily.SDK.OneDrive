@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Jasily.SDK.OneDrive.Entities.Facets;
 
 namespace Jasily.SDK.OneDrive.Entities
 {
@@ -12,7 +13,7 @@ namespace Jasily.SDK.OneDrive.Entities
         public string DownloadUrl { get; set; }
 
         [DataMember(Name = "parentReference")]
-        public ItemReference Parent { get; set; }
+        public ItemReferenceFacet Parent { get; set; }
 
         #region only file
 

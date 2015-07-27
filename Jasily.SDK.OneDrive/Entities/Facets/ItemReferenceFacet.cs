@@ -1,9 +1,9 @@
 using System.Runtime.Serialization;
 
-namespace Jasily.SDK.OneDrive.Entities
+namespace Jasily.SDK.OneDrive.Entities.Facets
 {
     [DataContract]
-    public class ItemReference
+    public class ItemReferenceFacet
     {
         [DataMember(Name = "driveId")]
         public string DriveId { get; set; }
