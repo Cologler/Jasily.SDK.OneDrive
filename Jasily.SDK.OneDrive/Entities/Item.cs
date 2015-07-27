@@ -101,7 +101,7 @@ namespace Jasily.SDK.OneDrive.Entities
             };
 
             return await (controller ?? this.CreatorController).WrapRequestAsync<Item>(
-                $"drive/items/{this.Id}/thumbnails",
+                $"drive/items/{this.Id}",
                 HttpWebRequestResourceString.Method.Patch,
                 entity.ObjectToJson().GetBytes());
         }
