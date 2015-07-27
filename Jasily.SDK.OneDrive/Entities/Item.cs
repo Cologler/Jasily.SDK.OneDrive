@@ -86,7 +86,7 @@ namespace Jasily.SDK.OneDrive.Entities
             }
         }
 
-        public async Task<WebResult<Item>> MoveByIdAsync(string targetFolderId, string newName, OneDriveWebController controller = null)
+        public async Task<WebResult<Item>> MoveByIdAsync(string targetFolderId, string newName = null, OneDriveWebController controller = null)
         {
             if (targetFolderId.IsNullOrWhiteSpace())
                 throw new ArgumentException($"{nameof(targetFolderId)} can not be empty.");
