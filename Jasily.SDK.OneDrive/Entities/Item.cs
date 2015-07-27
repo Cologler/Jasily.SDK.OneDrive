@@ -3,6 +3,7 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Jasily.SDK.OneDrive.Entities.Facets;
+using System.Runtime.Serialization.Json;
 
 namespace Jasily.SDK.OneDrive.Entities
 {
@@ -13,7 +14,7 @@ namespace Jasily.SDK.OneDrive.Entities
         public string DownloadUrl { get; set; }
 
         [DataMember(Name = "parentReference")]
-        public ItemReferenceFacet Parent { get; set; }
+        public ItemReferenceFacet ParentInfo { get; set; }
 
         #region only file
 
@@ -64,7 +65,7 @@ namespace Jasily.SDK.OneDrive.Entities
         public async Task<WebResult<OneDriveArray<ThumbnailSet>>> GetThumbnailsAsync(OneDriveWebController controller = null)
         {
             return await (controller ?? this.CreatorController)
-                .WrapGetAsync<OneDriveArray<ThumbnailSet>>($"drive/items/{this.Id}/thumbnails");
+                .WrapRequestAsync<OneDriveArray<ThumbnailSet>>($"drive/items/{this.Id}/thumbnails");
         }
 
         public async Task<WebResult<string>> GetStreamUrlAsync(OneDriveWebController controller = null)
@@ -84,5 +85,37 @@ namespace Jasily.SDK.OneDrive.Entities
                 throw new NotSupportedException("can not get Address", e);
             }
         }
+
+        public async Task<WebResult<Item>> MoveByIdAsync(string targetFolderId, string newName, OneDriveWebController controller = null)
+        {
+            if (targetFolderId.IsNullOrWhiteSpace())
+                throw new ArgumentException($"{nameof(targetFolderId)} can not be empty.");
+
+            var entity = new MoveMethodBodyEntity()
+            {
+                Name = newName.IsNullOrWhiteSpace() ? this.Name : newName,
+                ParentInfo = new ItemReferenceFacetOnlyId()
+                {
+                    Id = targetFolderId
+                }
+            };
+
+            return await (controller ?? this.CreatorController).WrapRequestAsync<Item>(
+                $"drive/items/{this.Id}/thumbnails",
+                HttpWebRequestResourceString.Method.Patch,
+                entity.ObjectToJson().GetBytes());
+        }
+
+        [DataContract]
+        private class MoveMethodBodyEntity
+        {
+            [DataMember(Name = "name")]
+            public string Name { get; set; }
+
+            [DataMember(Name = "parentReference")]
+            public ItemReferenceFacetOnlyId ParentInfo { get; set; }
+        }
     }
+
+
 }

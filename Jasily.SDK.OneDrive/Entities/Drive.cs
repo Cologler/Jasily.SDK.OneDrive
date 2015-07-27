@@ -38,7 +38,7 @@ namespace Jasily.SDK.OneDrive.Entities
         public async Task<WebResult<Root>> GetRootAsync(OneDriveWebController controller = null)
         {
             return await (controller ?? this.CreatorController)
-                .WrapGetAsync<Root>("drive/root");
+                .WrapRequestAsync<Root>("drive/root");
         }
     }
 }

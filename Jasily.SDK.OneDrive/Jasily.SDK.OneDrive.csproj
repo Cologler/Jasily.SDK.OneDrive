@@ -60,7 +60,7 @@
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\IdentitySet.cs" />
     <Compile Include="Entities\OneDriveObject.cs" />
-    <Compile Include="Entities\ItemReference.cs" />
+    <Compile Include="Entities\Facets\ItemReferenceFacet.cs" />
     <Compile Include="Entities\PhotoInfo.cs" />
     <Compile Include="Entities\Root.cs" />
     <Compile Include="Entities\ThumbnailInfo.cs" />

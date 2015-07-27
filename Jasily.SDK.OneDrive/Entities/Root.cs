@@ -59,12 +59,12 @@ namespace Jasily.SDK.OneDrive.Entities
                     throw new ArgumentOutOfRangeException($"{nameof(pageSize)} must be 0 < {nameof(pageSize)} < 1001");
 
                 return await (controller ?? this.CreatorController)
-                    .WrapGetAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children?top={pageSize}");
+                    .WrapRequestAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children?top={pageSize}");
             }
             else
             {
                 return await (controller ?? this.CreatorController)
-                    .WrapGetAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children");
+                    .WrapRequestAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children");
             }
         }
     }

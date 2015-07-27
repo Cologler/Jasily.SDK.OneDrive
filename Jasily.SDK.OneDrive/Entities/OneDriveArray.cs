@@ -43,7 +43,7 @@ namespace Jasily.SDK.OneDrive.Entities
                 throw new InvalidOperationException("can not get next page.");
 
             return await (controller ?? this.CreatorController)
-                .RawGetAsync<OneDriveArray<T>>(this.NextPageUrl);
+                .RawRequestAsync<OneDriveArray<T>>(this.NextPageUrl);
         }
     }
 }
