@@ -66,8 +66,8 @@ namespace Jasily.SDK.OneDrive
             var bytesResult = body == null
                 ? await request.GetResultAsBytesAsync()
                 : await request.SendAndGetResultAsBytesAsync(body.ToMemoryStream());
-            //if (bytesResult.IsSuccess)
-            //    Debug.WriteLine(bytesResult.Result.GetString());
+            if (bytesResult.IsSuccess)
+                Debug.WriteLine(bytesResult.Result.Length);
             var result = bytesResult.AsJson<T>();
             if (result.IsSuccess)
                 result.Result.SetCreatorController(this);
@@ -90,9 +90,9 @@ namespace Jasily.SDK.OneDrive
             return await this.WrapRequestAsync<Drive>("drive");
         }
 
-        public async Task<WebResult<OneDriveArray<Drive>>> GetDrivesAsync()
+        public async Task<WebResult<OneDriveItemPage<Drive>>> GetDrivesAsync()
         {
-            return await this.WrapRequestAsync<OneDriveArray<Drive>>("drives");
+            return await this.WrapRequestAsync<OneDriveItemPage<Drive>>("drives");
         }
     }
 }

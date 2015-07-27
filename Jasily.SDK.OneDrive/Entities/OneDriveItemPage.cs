@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
-    public class OneDriveArray<T> : OneDriveEntity
+    public class OneDriveItemPage<T> : OneDriveEntity
     {
         [DataMember(Name = "value")]
         public List<T> Value { get; set; }
@@ -37,13 +37,13 @@ namespace Jasily.SDK.OneDrive.Entities
         /// </summary>
         /// <param name="controller"></param>
         /// <returns></returns>
-        public async Task<WebResult<OneDriveArray<T>>> GetNextAsync(OneDriveWebController controller = null)
+        public async Task<WebResult<OneDriveItemPage<T>>> GetNextAsync(OneDriveWebController controller = null)
         {
             if (!this.HasNext())
                 throw new InvalidOperationException("can not get next page.");
 
             return await (controller ?? this.CreatorController)
-                .RawRequestAsync<OneDriveArray<T>>(this.NextPageUrl);
+                .RawRequestAsync<OneDriveItemPage<T>>(this.NextPageUrl);
         }
     }
 }

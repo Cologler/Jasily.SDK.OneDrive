@@ -51,7 +51,7 @@ namespace Jasily.SDK.OneDrive.Entities
         /// <param name="controller"></param>
         /// <param name="pageSize">default value was 200, max value was 1000 ( test on 2015-07-27 ).</param>
         /// <returns></returns>
-        public async Task<WebResult<OneDriveArray<Item>>> ListChildrenAsync(OneDriveWebController controller = null, int? pageSize = null)
+        public async Task<WebResult<OneDriveItemPage<Item>>> ListChildrenAsync(OneDriveWebController controller = null, int? pageSize = null)
         {
             if (pageSize.HasValue)
             {
@@ -59,12 +59,12 @@ namespace Jasily.SDK.OneDrive.Entities
                     throw new ArgumentOutOfRangeException($"{nameof(pageSize)} must be 0 < {nameof(pageSize)} < 1001");
 
                 return await (controller ?? this.CreatorController)
-                    .WrapRequestAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children?top={pageSize}");
+                    .WrapRequestAsync<OneDriveItemPage<Item>>($"drive/items/{this.Id}/children?top={pageSize}");
             }
             else
             {
                 return await (controller ?? this.CreatorController)
-                    .WrapRequestAsync<OneDriveArray<Item>>($"drive/items/{this.Id}/children");
+                    .WrapRequestAsync<OneDriveItemPage<Item>>($"drive/items/{this.Id}/children");
             }
         }
     }
