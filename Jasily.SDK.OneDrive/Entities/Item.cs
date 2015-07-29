@@ -16,6 +16,12 @@ namespace Jasily.SDK.OneDrive.Entities
         [DataMember(Name = "parentReference")]
         public ItemReferenceFacet ParentInfo { get; set; }
 
+        /// <summary>
+        /// if get failed, return null.
+        /// </summary>
+        /// <returns></returns>
+        public string GetPath() => this.ParentInfo?.Path?.AfterLast(':').UrlDecode();
+
         #region only file
 
         /// <summary>
