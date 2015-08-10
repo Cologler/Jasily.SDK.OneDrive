@@ -16,7 +16,7 @@ namespace Jasily.SDK.OneDrive.Authentications
 
         public string ClientId { get; }
 
-	    public abstract Uri BuildAuthenticateUri(AuthenticationPermissions scope);
+        public abstract Uri BuildAuthenticateUri(AuthenticationPermissions scope);
 
         protected enum ResponseType
         {
@@ -38,11 +38,11 @@ namespace Jasily.SDK.OneDrive.Authentications
             return redirectUri.StartsWith(RedirectUri);
         }
 
-	    public async Task<bool> LogoutAsync()
-	    {
-		    var url = $"https://login.live.com/oauth20_logout.srf?client_id={this.ClientId}&redirect_uri={RedirectUri}";
+        public async Task<bool> LogoutAsync()
+        {
+            var url = $"https://login.live.com/oauth20_logout.srf?client_id={this.ClientId}&redirect_uri={RedirectUri}";
             var request = WebRequest.CreateHttp(url);
-		    return (await request.GetResultAsync()).IsSuccess;
-	    }        
+            return (await request.GetResultAsync()).IsSuccess;
+        }        
     }
 }
