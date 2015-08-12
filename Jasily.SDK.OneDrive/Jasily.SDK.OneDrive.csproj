@@ -35,9 +35,13 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\Jasily\Jasily.Core\Jasily.Core.csproj">
+    <ProjectReference Include="..\..\Jasily\Jasily.Core\Jasily.Core.csproj">
       <Project>{8442e8e7-d515-4481-8a36-71711b1fbf79}</Project>
       <Name>Jasily.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Jasily\Jasily\Jasily.csproj">
+      <Project>{6ADB6547-070B-4518-A2D1-E3BC349730BC}</Project>
+      <Name>Jasily</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

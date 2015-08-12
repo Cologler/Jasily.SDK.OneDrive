@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
+using Jasily.Net;
 
 namespace Jasily.SDK.OneDrive
 {

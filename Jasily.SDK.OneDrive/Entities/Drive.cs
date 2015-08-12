@@ -5,6 +5,7 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Jasily.Net;
 
 namespace Jasily.SDK.OneDrive.Entities
 {

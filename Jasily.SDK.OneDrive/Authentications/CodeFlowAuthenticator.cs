@@ -3,6 +3,7 @@ using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using Jasily.Net;
 
 namespace Jasily.SDK.OneDrive.Authentications
 {
@@ -64,6 +65,7 @@ namespace Jasily.SDK.OneDrive.Authentications
             public DateTime LastUpdateTime { get; private set; }
             public int LastExpiresIn { get; private set; }
 
+            public event EventHandler<bool> AccessTokenUpdateResult;
             public event EventHandler<string> AccessTokenUpdated;
 
             public async Task<bool> UpdateTokenAsync()
@@ -86,6 +88,7 @@ namespace Jasily.SDK.OneDrive.Authentications
                     this.AccessTokenUpdated.BeginFire(this, result.Result.AccessToken);
                     return true;
                 }
+                this.AccessTokenUpdateResult.BeginFire(this, result.IsSuccess);
 
                 return false;
             }

@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Jasily.SDK.OneDrive.Entities.Facets;
 using System.Runtime.Serialization.Json;
+using Jasily.Net;
 
 namespace Jasily.SDK.OneDrive.Entities
 {
