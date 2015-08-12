@@ -3,10 +3,8 @@ using Jasily.SDK.OneDrive.Authentications;
 using System.Net;
 using Jasily.SDK.OneDrive.Entities;
 using System.Threading.Tasks;
-using System.Runtime.Serialization.Json;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization;
 using Jasily.Net;
 
 namespace Jasily.SDK.OneDrive
@@ -25,11 +23,11 @@ namespace Jasily.SDK.OneDrive
             get { return this.tokenWatcher; }
             set
             {
-                if (tokenWatcher != value)
+                if (this.tokenWatcher != value)
                 {
-                    if (tokenWatcher != null)
+                    if (this.tokenWatcher != null)
                     {
-                        tokenWatcher.AccessTokenUpdated -= this.TokenWatcher_AccessTokenUpdated;
+                        this.tokenWatcher.AccessTokenUpdated -= this.TokenWatcher_AccessTokenUpdated;
                     }
 
                     if (value != null)
@@ -37,7 +35,7 @@ namespace Jasily.SDK.OneDrive
                         value.AccessTokenUpdated += this.TokenWatcher_AccessTokenUpdated;
                     }
 
-                    tokenWatcher = value;
+                    this.tokenWatcher = value;
                 }
             }
         }
@@ -69,7 +67,7 @@ namespace Jasily.SDK.OneDrive
                 var request = this.CreateRequest(url);
                 request.Method = method;
                 if (body != null)
-                    request.ContentType = HttpWebRequestResourceString.ContentType.ApplicationJson;
+                    request.ContentType = HttpWebRequestResourceString.ContentType.Application.Json;
                 var bytesResult = body == null
                     ? await request.GetResultAsBytesAsync()
                     : await request.SendAndGetResultAsBytesAsync(body.ToMemoryStream());
@@ -96,6 +94,8 @@ namespace Jasily.SDK.OneDrive
         /// path was url after 'https://api.onedrive.com/v1.0/'
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="method"></param>
+        /// <param name="body"></param>
         /// <returns></returns>
         internal async Task<WebResult<T>> WrapRequestAsync<T>(string path, string method = HttpWebRequestResourceString.Method.Get, byte[] body = null)
             where T : OneDriveEntity
@@ -113,36 +113,4 @@ namespace Jasily.SDK.OneDrive
             return await this.WrapRequestAsync<OneDriveItemPage<Drive>>("drives");
         }
     }
-
-    public static class OneDriveErrorExtensions
-    {
-        public static OneDriveErrorEntity TryGetErrorEntity<T>(this WebResult<T> result)
-        {
-            if (!result.IsSuccess && result.Response != null && result.Response.ContentLength > 0)
-            {
-                using (var stream = result.Response.GetResponseStream())
-                    return stream.ToArray().JsonToObject<OneDriveErrorEntity>();
-            }
-
-            return null;
-        }
-    }
-
-    [DataContract]
-    public sealed class OneDriveErrorEntity
-    {
-        [DataMember(Name = "error")]
-        public Error Error { get; set; }
-    }
-
-    [DataContract]
-    public class Error
-    {
-        [DataMember(Name = "code")]
-        public string Code { get; set; }
-
-        [DataMember(Name = "message")]
-        public string Message { get; set; }
-    }
-
 }

@@ -70,6 +70,9 @@
     <Compile Include="Entities\ThumbnailInfo.cs" />
     <Compile Include="Entities\ThumbnailSet.cs" />
     <Compile Include="Entities\VideoInfo.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="OneDriveErrorEntity.cs" />
+    <Compile Include="OneDriveErrorExtensions.cs" />
     <Compile Include="OneDriveWebController.cs" />
     <Compile Include="Entities\OneDriveItemPage.cs" />
     <Compile Include="Entities\DriveType.cs" />

@@ -45,7 +45,7 @@ namespace Jasily.SDK.OneDrive.Authentications
             // do some thing
             var request = WebRequest.CreateHttp("https://login.live.com/oauth20_token.srf");
             request.Method = HttpWebRequestResourceString.Method.Post;
-            request.ContentType = HttpWebRequestResourceString.ContentType.ApplicationXWwwFormUrlencoded;
+            request.ContentType = HttpWebRequestResourceString.ContentType.Application.XWwwFormUrlencoded;
             return (await request.SendAndGetResultAsBytesAsync(bodyString.GetBytes().ToMemoryStream())).AsJson<AuthenticationInfo>();
         }
 
