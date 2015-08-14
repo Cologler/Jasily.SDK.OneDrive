@@ -59,6 +59,19 @@ namespace Jasily.SDK.OneDrive
             return request;
         }
 
+        internal async Task<WebResult> RawRequestAsync(string url, string method = HttpWebRequestResourceString.Method.Get, byte[] body = null)
+        {
+            return await Task.Run(async () =>
+            {
+                var request = this.CreateRequest(url);
+                request.Method = method;
+                if (body != null)
+                    request.ContentType = HttpWebRequestResourceString.ContentType.Application.Json;
+                return body == null
+                    ? await request.GetResultAsync()
+                    : await request.SendAndGetResultAsync(body.ToMemoryStream());
+            });
+        }
         internal async Task<WebResult<T>> RawRequestAsync<T>(string url, string method = HttpWebRequestResourceString.Method.Get, byte[] body = null)
             where T : OneDriveEntity
         {
@@ -79,6 +92,17 @@ namespace Jasily.SDK.OneDrive
             });
         }
 
+        /// <summary>
+        /// path was url after 'https://api.onedrive.com/v1.0/'
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="method"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        internal async Task<WebResult> WrapRequestAsync(string path, string method = HttpWebRequestResourceString.Method.Get, byte[] body = null)
+        {
+            return await this.RawRequestAsync(RootApiUrl + path, method, body);
+        }
         /// <summary>
         /// path was url after 'https://api.onedrive.com/v1.0/'
         /// </summary>

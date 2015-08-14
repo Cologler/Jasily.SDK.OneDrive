@@ -23,6 +23,8 @@ namespace Jasily.SDK.OneDrive.Entities
         /// <returns></returns>
         public string GetPath() => this.ParentInfo?.Path?.AfterLast(':').UrlDecode();
 
+        public IItem AsIItem() => this;
+
         #region only file
 
         /// <summary>

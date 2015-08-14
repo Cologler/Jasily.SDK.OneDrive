@@ -64,6 +64,13 @@ namespace Jasily.SDK.OneDrive
                     json.GetBytes());
         }
 
+        public async static Task<WebResult> DeleteAsync(this IItem item, OneDriveWebController controller = null)
+        {
+            return await (controller ?? item.CreatorController)
+                .WrapRequestAsync($"drive/items/{item.Id}",
+                    HttpWebRequestResourceString.Method.Delete);
+        }
+
         [DataContract]
         private class CreateFolderEntity
         {
