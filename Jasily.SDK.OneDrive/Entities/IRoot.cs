@@ -15,7 +15,5 @@ namespace Jasily.SDK.OneDrive.Entities
         string Name { get; }
         long Size { get; }
         string WebUrl { get; }
-
-        IRoot AsIRoot();
     }
 }

@@ -45,7 +45,5 @@ namespace Jasily.SDK.OneDrive.Entities
         public FolderInfo FolderInfo { get; set; }
 
         #endregion
-
-        public IRoot AsIRoot() => this;
     }
 }
