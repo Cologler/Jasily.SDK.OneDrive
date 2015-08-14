@@ -51,6 +51,7 @@ namespace Jasily.SDK.OneDrive
             var entity = new CreateFolderEntity()
             {
                 Name = newFolderName,
+                Folder = new EmptyEntity(),
                 NameconflictBehavior = conflict.GetValue()
             };
 
@@ -58,11 +59,12 @@ namespace Jasily.SDK.OneDrive
             Debug.WriteLine(json);
 
             return await (controller ?? folder.CreatorController)
-                    .WrapRequestAsync<Item>($"drive/items/{folder.Id}/children",
+                .WrapRequestAsync<Item>($"drive/items/{folder.Id}/children",
                     HttpWebRequestResourceString.Method.Post,
                     json.GetBytes());
         }
 
+        [DataContract]
         private class CreateFolderEntity
         {
             [DataMember(Name = "name")]

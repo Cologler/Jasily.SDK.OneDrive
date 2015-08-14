@@ -72,17 +72,6 @@ namespace Jasily.SDK.OneDrive
                     ? await request.GetResultAsBytesAsync()
                     : await request.SendAndGetResultAsBytesAsync(body.ToMemoryStream());
 
-                // print
-                if (bytesResult.IsSuccess)
-                {
-                    Debug.WriteLine(bytesResult.Result.Length);
-                }
-                else if (bytesResult.Response != null && bytesResult.Response.ContentLength > 0)
-                {
-                    using (var stream = bytesResult.Response.GetResponseStream())
-                        Debug.WriteLine(stream.ToArray().GetString());
-                }
-
                 var result = bytesResult.AsJson<T>();
                 if (result.IsSuccess)
                     result.Result.SetCreatorController(this);
