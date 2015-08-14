@@ -7,7 +7,7 @@ using Jasily.Net;
 namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
-    public class Root : FileSystemInfo
+    public class Root : FileSystemInfo, IRoot
     {
         [DataMember(Name = "createdBy")]
         public IdentitySet CreatedBy { get; set; }

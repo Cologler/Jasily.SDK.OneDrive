@@ -59,7 +59,12 @@
     <Compile Include="Entities\FileSystemInfo.cs" />
     <Compile Include="Entities\FolderInfo.cs" />
     <Compile Include="Entities\Hashes.cs" />
+    <Compile Include="Entities\IFile.cs" />
+    <Compile Include="Entities\IImage.cs" />
+    <Compile Include="Entities\IItem.cs" />
     <Compile Include="Entities\ImageInfo.cs" />
+    <Compile Include="Entities\IRoot.cs" />
+    <Compile Include="Entities\IVideo.cs" />
     <Compile Include="Entities\MediaInfo.cs" />
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\IdentitySet.cs" />

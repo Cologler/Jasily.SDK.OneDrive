@@ -9,7 +9,7 @@ using Jasily.Net;
 namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
-    public class Item : Root
+    public class Item : Root, IItem, IFile, IVideo, IImage
     {
         [DataMember(Name = "@content.downloadUrl")]
         public string DownloadUrl { get; set; }
@@ -32,6 +32,8 @@ namespace Jasily.SDK.OneDrive.Entities
         public FileInfo FileInfo { get; set; }
 
         public bool IsFile() => this.FileInfo != null;
+
+        public IFile AsIFile() => this;
 
         #region only video
 
