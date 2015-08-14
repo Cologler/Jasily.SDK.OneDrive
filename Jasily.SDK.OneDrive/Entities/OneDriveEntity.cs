@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Jasily.SDK.OneDrive.Entities
 {
     [DataContract]
-    public abstract class OneDriveEntity : OneDriveObject
+    public abstract class OneDriveEntity : OneDriveObject, IEntity
     {
         [DataMember(Name = "@odata.context")]
         public string ODataContext { get; set; }

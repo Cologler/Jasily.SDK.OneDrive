@@ -3,7 +3,7 @@ using Jasily.Net;
 
 namespace Jasily.SDK.OneDrive.Entities
 {
-    public interface IRoot
+    public interface IRoot : IEntity
     {
         IdentitySet CreatedBy { get; }
         string CTag { get; }
@@ -16,6 +16,6 @@ namespace Jasily.SDK.OneDrive.Entities
         long Size { get; }
         string WebUrl { get; }
 
-        Task<WebResult<OneDriveItemPage<Item>>> ListChildrenAsync(OneDriveWebController controller = null, int? pageSize = default(int?));
+        IRoot AsIRoot();
     }
 }

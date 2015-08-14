@@ -14,15 +14,9 @@ namespace Jasily.SDK.OneDrive.Entities
         public string LastModifiedDateTime;
 
         [IgnoreDataMember]
-        public DateTime Created
-        {
-            get { return GetISODateTime(CreatedDateTime); }
-        }
+        public DateTime Created => this.GetISODateTime(this.CreatedDateTime);
 
         [IgnoreDataMember]
-        public DateTime Modified
-        {
-            get { return GetISODateTime(LastModifiedDateTime); }
-        }
+        public DateTime Modified => this.GetISODateTime(this.LastModifiedDateTime);
     }
 }

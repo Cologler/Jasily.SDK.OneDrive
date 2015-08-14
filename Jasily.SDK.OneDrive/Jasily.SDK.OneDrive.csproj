@@ -54,11 +54,14 @@
     <Compile Include="Authentications\ICodeFlowAuthenticationInfo.cs" />
     <Compile Include="Authentications\ITokenFlowAuthenticationInfo.cs" />
     <Compile Include="Authentications\TokenFlowAuthenticator.cs" />
+    <Compile Include="Options\ConflictBehavior.cs" />
     <Compile Include="Entities\AudioInfo.cs" />
+    <Compile Include="Entities\EmptyEntity.cs" />
     <Compile Include="Entities\FileInfo.cs" />
     <Compile Include="Entities\FileSystemInfo.cs" />
     <Compile Include="Entities\FolderInfo.cs" />
     <Compile Include="Entities\Hashes.cs" />
+    <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\IFile.cs" />
     <Compile Include="Entities\IImage.cs" />
     <Compile Include="Entities\IItem.cs" />
@@ -85,6 +88,7 @@
     <Compile Include="Entities\OneDriveEntity.cs" />
     <Compile Include="Entities\Quota.cs" />
     <Compile Include="Entities\Identity.cs" />
+    <Compile Include="OneDriveWebItemExtensions.cs" />
     <Compile Include="OptionalParameters\Expand.cs" />
     <Compile Include="OptionalParameters\ExpandMode.cs" />
     <Compile Include="OptionalParameters\IOneDriveOptionalParameters.cs" />
@@ -92,8 +96,10 @@
     <Compile Include="OptionalParameters\OrderByProperties.cs" />
     <Compile Include="OptionalParameters\Select.cs" />
     <Compile Include="OptionalParameters\SelectProperties.cs" />
+    <Compile Include="Options\EnumGetValueExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
