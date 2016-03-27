@@ -35,7 +35,10 @@ namespace Jasily.SDK.OneDrive.OptionalParameters
 
         private IEnumerable<string> Popup()
         {
-            return this.SelectedProperties.SplitFlags(false).Select(z => z.ToString().ToLower());
-        } 
+            var properties = this.SelectedProperties;
+            return JasilyEnum.GetValues<SelectProperties>()
+                .Where(z => z != SelectProperties.None && ((properties & z) == z))
+                .Select(property => property.ToString().ToLower());
+        }
     }
 }

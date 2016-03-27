@@ -11,11 +11,4 @@ namespace Jasily.SDK.OneDrive.Entities.Facets
         [DataMember(Name = "path")]
         public string Path { get; set; }
     }
-
-    [DataContract]
-    public class ItemReferenceFacetOnlyId
-    {
-        [DataMember(Name = "id")]
-        public string Id { get; set; }
-    }
 }

@@ -54,6 +54,7 @@
     <Compile Include="Authentications\ICodeFlowAuthenticationInfo.cs" />
     <Compile Include="Authentications\ITokenFlowAuthenticationInfo.cs" />
     <Compile Include="Authentications\TokenFlowAuthenticator.cs" />
+    <Compile Include="Entities\Facets\ItemReferenceFacetOnlyId.cs" />
     <Compile Include="Options\ConflictBehavior.cs" />
     <Compile Include="Entities\AudioInfo.cs" />
     <Compile Include="Entities\EmptyEntity.cs" />

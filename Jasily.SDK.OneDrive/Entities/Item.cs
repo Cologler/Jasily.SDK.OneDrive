@@ -127,6 +127,4 @@ namespace Jasily.SDK.OneDrive.Entities
             public ItemReferenceFacetOnlyId ParentInfo { get; set; }
         }
     }
-
-
 }
